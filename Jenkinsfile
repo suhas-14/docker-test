@@ -13,7 +13,7 @@ pipeline {
         stage('docker compose') {
             steps {
              script {
-                 withDockerRegistry(credentialsId: 'docker-key', toolName: 'dock') {
+                 withDockerRegistry(credentialsId: 'docker-key', toolName: 'docker') {
                     sh 'docker-compose up -d'
                   }
               }
