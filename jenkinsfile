@@ -4,9 +4,6 @@ def COLOR_MAP = [
     ]
 pipeline {
     agent any
-     environment {
-        SCANNER_HOME = tool 'sonarqube'
-    }
     stages {
         stage('git checkout') {
             steps {
@@ -22,25 +19,6 @@ pipeline {
               }
             }
         }
-        stage('compile') {
-            steps {
-              sh 'mvn compile'
-            }
-        }
-   stage('code analysis') {
-            steps {
-              withSonarQubeEnv('sonar-server') {
-               sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java-springboot \
-               -Dsonar.java.binaries=. \
-               -Dsonar.projectKey=java-springboot'''
-              }
-            }
-        }
-  stage('package') {
-            steps {
-              sh 'mvn install'
-            }
-        }
     }	
  
     post {
@@ -48,8 +26,7 @@ pipeline {
             echo 'slack Notification.'
             slackSend channel: '#ci-cd-pipeline',
             color: COLOR_MAP [currentBuild.currentResult],
-            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URl}"
-            
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URl}"  
         }
     }
 }
