@@ -1,11 +1,11 @@
 version: '3.0'
 services:
-  java-service:
-    build: sudo docker pull suhas8/dockertest:java
+  web-service:
+    build: sudo docker pull suhas8/dockertest:web
     ports:
       - 75:8080
     volumes:
-      - java-vol:/usr/src/javapp
+      - web-vol:/usr/src/webapp
 
   finance-service:
     build: sudo docker pull suhas8/dockertest:latest
