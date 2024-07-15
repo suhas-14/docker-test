@@ -24,15 +24,15 @@ pipeline {
         stage('Result') {
             steps {
                 echo 'success'
+            }
         }
-    }
     }
     post {
         always {
-        echo 'Slack Notification'
-        slackSend channel: '#ci-cd-pipeline',
-        color: COLOR_MAP [currentBuil.current.Result],
-        message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+            echo 'Slack Notification'
+            slackSend channel: '#ci-cd-pipeline',
+            color: COLOR_MAP [currentBuil.current.Result],
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
         }        
     }
 }
