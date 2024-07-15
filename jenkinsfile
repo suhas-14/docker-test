@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-             git 'https://github.com/suhas-14/Java-Springboot.git'
+             git 'https://github.com/suhas-14/docker-test.git'
             }
         }
          stage('compile') {
@@ -21,9 +21,9 @@ pipeline {
    stage('code analysis') {
             steps {
               withSonarQubeEnv('sonar-server') {
-               sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java-spring-boot \
+               sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=java-springboot \
                -Dsonar.java.binaries=. \
-               -Dsonar.projectKey=java-spring-boot'''
+               -Dsonar.projectKey=java-springboot'''
               }
             }
         }
