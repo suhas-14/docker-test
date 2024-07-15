@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Fetch') {
             steps {
-                sh 'git https://github.com/suhas-14/docker-test.git'
+                sh 'https://github.com/suhas-14/docker-test.git'
             }
         }
         stage('Docker Compose') {
