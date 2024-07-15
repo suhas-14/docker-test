@@ -22,10 +22,11 @@ pipeline {
             }
         }
         stage('Result') {
-            echo 'success'
+            steps {
+                echo 'success'
         }
     }
-    
+    }
     post {
         always {
         echo 'Slack Notification'
