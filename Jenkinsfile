@@ -7,9 +7,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Fetch') {
+        stage('Git Checkout') {
             steps {
-                sh 'https://github.com/suhas-14/docker-test.git'
+                git 'https://github.com/suhas-14/docker-test.git'
             }
         }
         stage('Docker Compose') {
