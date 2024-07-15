@@ -13,7 +13,16 @@ pipeline {
              git 'https://github.com/suhas-14/docker-test.git'
             }
         }
-         stage('compile') {
+        stage('docker compose') {
+            steps {
+             script {
+                 withDockerRegistry(credentialsId: 'docker-key', toolName: 'dock') {
+                    sh 'docker-compose up -d'
+                  }
+              }
+            }
+        }
+        stage('compile') {
             steps {
               sh 'mvn compile'
             }
@@ -32,16 +41,7 @@ pipeline {
               sh 'mvn install'
             }
         }
-  stage('docker compose') {
-            steps {
-             script {
-                 withDockerRegistry(credentialsId: 'docker-key', toolName: 'dock') {
-                    sh 'docker-compose up -d'
-                  }
-              }
-            }
-        }
-  }	
+    }	
  
     post {
         always {
