@@ -2,31 +2,36 @@ def COLOR_MAP = [
     'SUCCESS': 'good',
     'FAILURE': 'danger'
     ]
+
 pipeline {
     agent any
+
     stages {
-        stage('git checkout') {
+        stage('Fetch') {
             steps {
-             git 'https://github.com/suhas-14/docker-test.git'
+                sh 'git https://github.com/suhas-14/docker-test.git'
             }
         }
-        stage('docker compose') {
+        stage('Docker Compose') {
             steps {
-             script {
-                 withDockerRegistry(credentialsId: 'docker-key', toolName: 'docker') {
-                    sh 'docker-compose up -d'
-                  }
-              }
+                script {
+                    withDockerRegistry(credentialsId: 'docker-key', toolName: 'docker') {
+                        sh 'sudo docker compose up -d'
+                    }
+                }
             }
         }
-    }	
- 
+        stage('Result') {
+            echo 'success'
+        }
+    }
+    
     post {
         always {
-            echo 'slack Notification.'
-            slackSend channel: '#ci-cd-pipeline',
-            color: COLOR_MAP [currentBuild.currentResult],
-            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URl}"  
-        }
+        echo 'Slack Notification'
+        slackSend channel: '#ci-cd-pipeline',
+        color: COLOR_MAP [currentBuil.current.Result],
+        message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} Build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+        }        
     }
 }
