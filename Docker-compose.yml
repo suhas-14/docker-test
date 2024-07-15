@@ -1,0 +1,32 @@
+version: '3.0'
+services:
+  java-service:
+    build: sudo docker pull suhas8/dockertest:java
+    ports:
+      - 75:8080
+    volumes:
+      - java-vol:/usr/src/javapp
+
+  finance-service:
+    build: sudo docker pull suhas8/dockertest:latest
+    ports:
+      - 65:80
+    volumes:
+      - fin-vol:/usr/src/finapp
+
+  portfolio-service:
+    build: sudo docker pull suhas8/dockertest:1.0
+    ports:
+      - 55:80
+    volumes:
+      - port-vol:/usr/src/portapp
+
+volumes:
+  java-vol:
+   driver: local
+  
+  fin-vol:
+   driver: local
+
+  port-vol:
+   driver: local
